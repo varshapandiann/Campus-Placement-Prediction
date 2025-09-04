@@ -18,3 +18,15 @@ Despite structured placement training programs and career development initiative
 * **Handling Imbalanced Data:** The placement dataset is often imbalanced, with a smaller proportion of students securing jobs compared to the total number of applicants. This imbalance can impact model performance and prediction reliability.
 * **Selecting an Optimal Machine Learning Model:** Different ML models vary in their ability to handle classification tasks, generalize well, and provide interpretability. Finding the most suitable model requires comparative evaluation.
 * **Ensuring Interpretability of Predictions:** Placement prediction models should not only be accurate but also interpretable, enabling institutions to derive meaningful insights and guide students in improving their employability.
+
+### 1.3 Objectives
+
+The primary objectives of this research are:
+* **Analyze Placement Data:** Investigate patterns and trends in student placement records to identify factors contributing to successful job acquisition.
+* **Preprocess and Clean Data:** Implement data cleaning, normalization, and feature selection techniques to ensure high-quality input for ML models.
+* **Train and Compare Machine Learning Models:** Develop multiple ML models, beginning with SVM and subsequently implementing Random Forest, to determine their predictive capabilities and performance differences.
+* **Interpret Feature Importance:** Utilize model-based feature importance analysis to highlight the most influential factors affecting placement outcomes.
+* **Visualize Results for Decision-Making:** Employ graphical representations, including decision tree diagrams and feature importance plots, to enhance interpretability and facilitate informed decision-making.
+* **Propose Placement Improvement Strategies:** Based on the findings, recommend data-driven strategies for students and educational institutions to optimize career preparedness and placement success rates.
+
+By addressing these objectives, this study aims to bridge the gap between academic training and industry requirements, ensuring that students are better equipped to secure employment opportunities.
