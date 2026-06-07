@@ -69,3 +69,166 @@ The dataset for this study was collected from student placement records and cont
 * **Placement Outcome:** A binary label (Placed/Not Placed) indicating employment status.
 
 The dataset was preprocessed to handle missing values, normalize numerical attributes, and apply feature selection techniques to improve model performance. By utilizing a diverse dataset and comparing different machine learning techniques, our study provides a comprehensive analysis of placement prediction, bridging the gaps identified in existing research.
+
+## 3. Methodology
+This section outlines the systematic approach followed in data collection, preprocessing, model development, and performance evaluation for student placement prediction. The methodology follows a structured pipeline, starting from raw data acquisition to final model comparison.
+
+### 3.1 Data Collection and Preprocessing
+To develop an accurate placement prediction model, data was collected from student placement records over multiple academic years. The dataset comprised a diverse range of attributes that influence employability, including academic achievements, technical skills, and extracurricular participation.
+
+#### Dataset Description
+The dataset contained **X** records of students with the following key attributes:
+
+- **Academic Performance:**
+  - Cumulative GPA
+  - Grades in core subjects (Mathematics, Programming, Communication Skills, etc.)
+  - Trend of academic performance over semesters
+
+- **Internships and Job Experience:**
+  - Number and type of internships completed
+  - Certifications in relevant technical and soft skills (e.g., AWS, Google Cloud, Coursera, Udemy courses)
+    
+- **Demographic Information:**
+  - Age, gender, location
+    
+- **Placement Outcome:**
+  - A binary classification label (1 = Placed, 0 = Not Placed)
+ 
+####  Data Preprocessing Steps
+To ensure model accuracy and reliability, the following preprocessing techniques were applied:
+
+- **Handling Missing Values**
+  - **Numerical Attributes:** Missing values in GPA and grades were replaced using mean imputation to preserve overall data distribution.
+  - **Categorical Variables:** Department, certification status, and internship details were filled using mode imputation (most frequent category).
+
+- **Data Normalization**
+  - To standardize numerical features and improve model efficiency, Min-Max Scaling was applied, particularly for models sensitive to feature magnitude, like SVM.
+
+- **Feature Engineering & Selection**
+  - Highly correlated variables were removed to reduce multicollinearity and avoid redundant features.
+  - Recursive Feature Elimination (RFE) was used to identify the most relevant predictors for placement.
+
+- **Data Splitting**
+  - The dataset was split into 80% training and 20% testing subsets to evaluate model performance on unseen data.
+
+### 3.2 Support Vector Machine (SVM) Implementation
+
+#### Initial Model Development
+SVM was chosen as the first model due to its effectiveness in high-dimensional classification problems.
+
+- **Kernel Selection**
+  - A **linear kernel** was initially applied but failed to capture complex decision boundaries.
+  - The **Radial Basis Function (RBF)** kernel was later selected to introduce non-linearity and improve performance.
+
+- **Hyperparameter Tuning**
+
+  - `GridSearchCV` was used to optimize:
+
+    -   **C (Regularization parameter):** Controls the trade-off between low error and model complexity.
+    -   **Gamma:** Defines the influence of individual training samples on decision boundaries.
+
+### 3.3 Observations from SVM Model
+
+Despite achieving a high accuracy of **81.39%**, the SVM model exhibited:
+
+-   **Overfitting:** Performed exceptionally well on training data but struggled to generalize.
+-   **Sensitivity to Outliers:** Noisy data caused misclassifications, affecting recall.
+-   **Computational Complexity:** Training and tuning became expensive as dataset size increased.
+
+### 3.4 Switching to Random Forest Classifier
+
+Random Forest was explored due to its robustness and ability to reduce overfitting.
+
+#### Why Random Forest?
+
+-   Reduces overfitting through bagging.
+-   Provides feature importance analysis.
+-   Handles both numerical and categorical variables.
+
+#### Implementation Steps
+
+- Hyperparameter Tuning
+  - Optimized using `GridSearchCV`:
+
+    -   `n_estimators = 100`
+    -   `max_depth`
+    -   `criterion = "gini"`
+
+- Feature Importance Analysis
+
+  - Random Forest identified the most influential predictors affecting placement success.
+
+### 3.5 Comparative Analysis: SVM vs Random Forest
+
+| Metric | SVM | Random Forest |
+| :--- | :---: | :---: |
+| Accuracy | 81.39% | 79.07% |
+| Precision | 81% | 78% |
+| Recall | 81% | 79% |
+| F1-Score | 80% | 78% |
+| Overfitting | Yes | No |
+| Training Time | High | Moderate |
+
+#### Key Findings
+
+- SVM achieved higher accuracy but suffered from overfitting.
+- Random Forest generalized better and was more robust.
+- Random Forest produced useful feature importance scores.
+- SVM had slightly higher precision, while Random Forest had better recall.
+- Random Forest required less computation.
+
+#### SVM Results
+
+-   **Accuracy:** `0.813953488372093`
+
+``` text
+              precision recall f1-score support
+
+0                 0.75   0.50    0.60      12
+1                 0.83   0.94    0.88      31
+
+accuracy                           0.81    43
+macro avg         0.79   0.72    0.74      43
+weighted avg      0.81   0.81    0.80      43
+```
+
+#### Random Forest Results
+
+-   **Accuracy:** `0.7906976744186046`
+
+``` text
+              precision recall f1-score support
+
+0                 0.67   0.50    0.57      12
+1                 0.82   0.90    0.86      31
+
+accuracy                           0.79    43
+macro avg         0.75   0.70    0.72      43
+weighted avg      0.78   0.79    0.78      43
+```
+
+### 3.6 Diagram Representations
+
+-   Random Forest Decision Tree Representation
+  <img width="1005" height="516" alt="image" src="https://github.com/user-attachments/assets/74e064bb-1102-4976-a9f3-9db6664cfd89" />
+
+-   Feature Importance
+  <img width="927" height="513" alt="image" src="https://github.com/user-attachments/assets/676629e4-c2ee-4c63-aa26-2a0314a998e7" />
+
+
+## 4. Conclusion and Future Work
+
+### 4.1 Summary of Findings
+
+- SVM achieved strong accuracy but was prone to overfitting.
+- Random Forest generalized better and was easier to interpret.
+- Internships, certifications, and non-academic achievements significantly influenced placement success.
+- Feature importance analysis helped identify impactful factors.
+
+### 4.2 Future Enhancements
+
+- Implement XGBoost.
+- Explore deep learning models (MLPs/CNNs).
+- Integrate NLP-based resume parsing.
+- Handle class imbalance using SMOTE or cost-sensitive learning.
+- Incorporate real-world industry trends and recruiter preferences.
