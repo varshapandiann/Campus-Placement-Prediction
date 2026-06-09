@@ -76,8 +76,6 @@ if submitted:
     prediction = model.predict(input_df)[0]
     
     # Decode prediction back to original labels
-    target_le = LabelEncoder()
-    target_le.fit(["Not Placed", "Placed"])  # target values in dataset
-    prediction_label = target_le.inverse_transform([prediction])[0]
+    prediction_label = label_encoders["status"].inverse_transform([prediction])[0]
     
     st.success(f"Prediction: {prediction_label}")
