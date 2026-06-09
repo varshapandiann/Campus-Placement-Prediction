@@ -13,35 +13,39 @@ st.set_page_config(
 # Load and prepare model
 @st.cache_resource
 def load_model():
-    # Load dataset
-    df = pd.read_csv("Placement_Data_Full_Class.csv")
-    
-    # Drop irrelevant columns if any (like 'sl_no', 'salary')
-    if 'sl_no' in df.columns:
-        df = df.drop(columns=['sl_no'])
-    if 'salary' in df.columns:
-        df = df.drop(columns=['salary'])
-    
-    # Encode categorical columns
-    label_encoders = {}
-    for col in df.columns:
-        if df[col].dtype == "object":
-            le = LabelEncoder()
-            df[col] = le.fit_transform(df[col])
-            label_encoders[col] = le
-    
-    # Split features and target
-    X = df.drop(columns=["status"])   # features
-    y = df["status"]                  # target (placed or not)
-    
-    # Train-test split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    # Train model
-    model = RandomForestClassifier(n_estimators=100, random_state=42)
-    model.fit(X_train, y_train)
-    
-    return model, X.columns.tolist(), label_encoders
+    try:
+        df = pd.read_csv("Placement_Data_Full_Class.csv")
+
+        if 'sl_no' in df.columns:
+            df = df.drop(columns=['sl_no'])
+        if 'salary' in df.columns:
+            df = df.drop(columns=['salary'])
+
+        label_encoders = {}
+
+        for col in df.columns:
+            if df[col].dtype == "object":
+                le = LabelEncoder()
+                df[col] = le.fit_transform(df[col])
+                label_encoders[col] = le
+
+        X = df.drop(columns=["status"])
+        y = df["status"]
+
+        model = RandomForestClassifier(
+            n_estimators=100,
+            random_state=42
+        )
+
+        model.fit(X, y)
+
+        return model, X.columns.tolist(), label_encoders
+
+    except Exception as e:
+        st.error(str(e))
+        st.write(df.dtypes)
+        st.write(df.head())
+        raise
 
 model, feature_names, label_encoders = load_model()
 
